@@ -12,7 +12,7 @@
 
 ## [六、DataBase](DataBase/DataBase.md)
 
-## [七、Command](Commands/Commands.md)
+## [七、Commands](Commands/Commands.md)
 
 ## [八、OSS](OSS/OSS.md)
 
