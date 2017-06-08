@@ -1,0 +1,88 @@
+{
+    "title" : "Golang学习笔记",
+    "author" : "Xiong Guiyin",
+    "description" : "学习的过程是枯燥的，但是为了让生活过得更好，只能暂时忍受这份枯燥。",
+    "language" : "zh-hans",
+
+    "links" : {
+        "sidebar" : {
+            "Home" : "https://sslinux.github.io"
+        }
+    },
+
+    "styles" : {
+        "website" : "styles/website.css",
+        "ebook" : "styles/ebook.css",
+        "pdf" : "styles/pdf.css",
+        "mobi" : "styles/mobi.css",
+        "epub" : "styles/epub.css"
+    },
+
+
+    "plugins": [
+        "disqus",
+        "duoshuo",
+        "-search",
+        "search-pro",
+        "advanced-emoji",
+        "github",
+        "emphasize",
+        "splitter",
+        "mermaid",
+        "sharing",
+        "toggle-chapters",
+        "tbfed-pagefooter",
+        "toc",
+        "visualizer"
+    ],
+
+    "pluginsConfig": {
+        "fontsettings": {
+            "theme": "sepia",
+            "family": "serif",
+            "size": 1
+        },
+
+        "disqus": {
+            "shortName": "GolangNotes"
+        },
+
+        "duoshuo": {
+            "short_name": "没事就发表点儿评论吧！！！",
+            "theme": "default"
+        },
+
+        "search-pro": {
+            "curWordLib": "nodejieba",
+            "defineWord": ["Golang Notes"]
+        },
+
+        "github": {
+            "url": "https://github.com/sslinux"
+        },
+
+        "sharing": {
+            "weibo": true,
+            "facebook": true,
+            "twitter": true,
+            "google": true,
+            "all": [
+                "facebook","google","twitter","weibo"
+            ]
+        },
+
+        "tbfed-pagefooter": {
+            "copyright":"Copyright & guiyin.xiong ==>> sslinux.com 2017",
+            "modify_label":"2017年6月8日",
+            "modify_format":"YYYY-MM-DD HH:mm:ss"
+        },
+
+        "toc": {
+            "addClass": true,
+            "className": "toc"
+        }
+        
+
+    }
+        
+}
