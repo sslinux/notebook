@@ -1,4 +1,3 @@
-
 # [个人学习笔记及总结：](https://github.com/sslinux/notebook.git)
 
 ## [一、Python](Python/Python.md)
@@ -13,10 +12,10 @@
 
 ## [六、DataBase](DataBase/DataBase.md)
 
-## [七、Command](Command/Command.md)
+## [七、Command](Commands/Commands.md)
 
 ## [八、OSS](OSS/OSS.md)
 
 
-<!-- toc -->
+
 
