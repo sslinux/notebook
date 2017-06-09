@@ -84,8 +84,8 @@
         },
 	
 	"donate": {
-	    "wechat": "./pictures/weixin.png",
-	    "alipay": "./pictures/alipay.jpg",
+	    "wechat": "https://github.com/sslinux/notebook/blob/master/pictures/weixin.png",
+	    "alipay": "https://github.com/sslinux/notebook/blob/master/pictures/alipay.jpg",
             "title": "",
  	    "button": "打赏一下",
 	    "alipayText": "支付宝打赏",
