@@ -26,6 +26,7 @@
         "search-pro",
         "advanced-emoji",
         "github",
+        "github-buttons",
         "emphasize",
         "splitter",
         "mermaid",
@@ -90,7 +91,16 @@
  	    "button": "打赏一下",
 	    "alipayText": "支付宝打赏",
 	    "wechatText": "微信打赏"
+	},
+
+        "github-buttons":{
+	    "repo": "sslinux/notebook",
+	    "types": [
+	        "star",
+	  	"watch",
+		"fork"
+	    ],
+	    "size":"small" 
 	}
     }
-        
 }
