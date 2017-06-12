@@ -1,5 +1,5 @@
 {
-    "title" : "Golang学习笔记",
+    "title" : "Notebook of Guiyin.Xiong",
     "author" : "Xiong Guiyin",
     "description" : "学习的过程是枯燥的，但是为了让生活过得更好，只能暂时忍受这份枯燥。",
     "language" : "zh-hans",
@@ -79,8 +79,8 @@
         },
 
         "tbfed-pagefooter": {
-            "copyright":"Copyright & guiyin.xiong ==>> sslinux.com 2017",
-            "modify_label":"2017年6月8日",
+            "copyright":"Copyright && Guiyin.Xiong<notebook.sslinux.com>",
+            "modify_label":"2017年6月12日",
             "modify_format":"YYYY-MM-DD HH:mm:ss"
         },
 
