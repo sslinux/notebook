@@ -84,7 +84,7 @@
 
 <span id="python语言执行流程"></span>
 ## python语言执行流程
-![Python_Interpreter](/images/Python_Interpreter.png)	
+![Python_Interpreter](/Python/images/Python_Interpreter.png)	
 	
 <span id="python解释器"></span>
 ## python解释器
@@ -510,7 +510,7 @@ In [13]: print("print test {num},{fot},{s}".format(num=23,fot=3.14,s="guiyin.xio
 print test 23,3.14,guiyin.xiong
 ```
 
-![Print_Format](images/Print_Format.png)
+![Print_Format](/Python/images/Print_Format.png)
 
 
 [返回目录](#目录)
@@ -689,7 +689,7 @@ python还有称为"内建"的标识符集合，虽不是保留字，仍不推荐
 ---
 
 以下是python关键字：
-![Python3_key_words](/images/python3_key_words.png)
+![Python3_key_words](/Python/images/python3_key_words.png)
 
 
 [返回目录](#目录)
@@ -730,7 +730,7 @@ python还有称为"内建"的标识符集合，虽不是保留字，仍不推荐
 
 - 交互式模式下，只有单个下划线的变量名(_)用于保存最后一个表达式的结果；
 
-![Python_Structure](/images/python_structure.png)
+![Python_Structure](/Python/images/python_structure.png)
 
 
 ```python
@@ -781,4 +781,3 @@ str是python内置的一个类，上述过程相当于使用str类实例化了�
 if __name__ == '__main__':
     if_suit
 ```
-
