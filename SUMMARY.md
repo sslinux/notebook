@@ -2,6 +2,8 @@
 
 * [Introduction](README.md)
 * [一、Python](Python/Python.md)
+  - [00.Environment](Python/00Environment.md)
+  - [01.QuickStart](Python/01QuickStart.md)
 * [二、Golang](Golang/Golang.md)
 * [三、JavaScript](JavaScript/JavaScript.md)
 * [四、NodeJS](NodeJS/NodeJS.md)
