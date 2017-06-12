@@ -36,14 +36,15 @@
         "toc",
         "visualizer",
 	"donate",
-	"edit-link"
+	"edit-link",
+	"theme-comscore"
     ],
 
     "pluginsConfig": {
         "fontsettings": {
             "theme": "sepia",
             "family": "serif",
-            "size": 1
+            "size": 2
         },
 	"edit-link": {
 	    "base": "https://github.com/sslinux/notebook/edit/master",
