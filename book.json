@@ -79,7 +79,7 @@
         },
 
         "tbfed-pagefooter": {
-            "copyright":"Copyright && Guiyin.Xiong<notebook.sslinux.com>",
+            "copyright":"Copyright && Guiyin.Xiong <notebook.sslinux.com>",
             "modify_label":"2017年6月12日",
             "modify_format":"YYYY-MM-DD HH:mm:ss"
         },
