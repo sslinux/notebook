@@ -5,7 +5,10 @@
 
 # Python内置类型
 
-## Python对象的相关术语：
+---
+
+<span id="Python对象的相关术语"></span>
+## Python对象的相关术语
 
 Python程序中保存的所有数据都是围绕**对象**这个概念展开的：
 
@@ -51,9 +54,12 @@ Python程序中保存的所有数据都是围绕**对象**这个概念展开的�
 		IB：
 ```
 
+[返回目录](#目录)
+
 ---
 
-## 对象的身份与类型：
+<span id="对象的身份与类型"></span>
+## 对象的身份与类型
 Python内置函数id()可返回一个对象的身份，即该对象在内存中的位置；
 - is运算符用于比较两个对象的身份；
 - type()用于返回一个对象的类型；
@@ -73,39 +79,64 @@ if type(a) is type(b):    # 类型比较；
     statements
 ```
 
-## 两个对象的三种属性比较：
+[返回目录](#目录)
+
+<span id="两个对象的三种属性比较"></span>
+## 两个对象的三种属性比较
 -	1、值比较：对象中的数据是否相同； num1 == num2
 -	2、身份比较：两个变量名引用是否为同一对象；  num1 is num2
 -	3、类型比较：两个对象的类型是否相同；   type(num1) is type(num2)
 
+[返回目录](#目录)
+
 ---
 
-## Python核心数据类型：
-### 数字：int,long,float,complex,bool
+
+<span id="Python核心数据类型"></span>
+## Python核心数据类型
+
+### 数字:int,long,float,complex,bool
 	3077，3.14，300000
-### 字符: str,unicode
+	
+* int
+* long
+* float
+* complex
+* bool
+
+### str
+### unicode
 	'mageedu.com',"spam"
-### 列表：list
+### list
 	['one','two','three']
-### 字典：dict
+### dict
 	{'course':'linux','language':'python'}
-### 元组：tuple
+### tuple
 	(32,'spam','eggs')
-### 文件: file
+### file
 	myFile=open('/tmp/tfile','r')
-### 集合：set,frozenset(冻结集合)
+### set
+
+set,frozenset(冻结集合)
 	set('abc'),{'a','b','c'}
-### 其他类型：
+### 其他类型
 	类类型，None，布尔型；
-### 编程单元类型：
+### 编程单元类型
 	函数、模块、类
-### 与实现相关的类型：
+### 与实现相关的类型
 	编译的代码堆栈跟踪；
-### 其他文件类工具：pipes,fifos,sockets
+### 其他文件类工具
+* pipes
+* fifos
+* sockets
+
+[返回目录](#目录)
 
 ---
 
-## 类型转换：
+<span id="类型转换"></span>
+## 类型转换
+
 ### str(),repr()或format()：将非字符型数据转换为字符；
 	str1 = repr(num1)
 ### int():转换为整数；
@@ -121,9 +152,12 @@ if type(a) is type(b):    # 类型比较；
 ### bin(x): 将整数转换为2进制字符；
 ### oct(x): 将整数转换为8进制字符；
 
+[返回目录](#目录)
+
 ---
 
-## 数字类型：
+<span id="数字类型"></span>
+## 数字类型
 - 库：
   - numpy：科学运算相关；
   - math：数学相关的运算；
@@ -163,18 +197,24 @@ if type(a) is type(b):    # 类型比较；
 		~x     按位求反
 ```
 
+[返回目录](#目录)
+
 ---
 
-## 序列类型：
+<span id="序列类型"></span>
+## 序列类型
 序列类型表示索引为非负整数的有序对象集合，包括字符串、列表和元组；
 - 字符串是字符的序列；
 - 列表和元组是任意python对象的序列；
 - 字符串和元组属于不可变序列，而列表则支持插入、删除和替换元素；
 - 所有序列都支持迭代；
 
+[返回目录](#目录)
+
 ---
 
-## 字符类型：
+<span id="字符类型"></span>
+## 字符类型
 - 字符串字面量：把文本放入单引号、双引号、三引号中；三(单|双)引号可以实现跨行定义；
 
 - 如果要使用unicode编码，则在字符之前使用字符u进行标识，如: u"magedu.com"
@@ -197,22 +237,31 @@ In [17]: printName.__doc__     #不适用括号运算符()表示调用函数对�
 Out[17]: 'test function'
 ```
 
-## 适用于所有序列的操作和方法：
+[返回目录](#目录)
 
-### 运算符：
+<span id="适用于所有序列的操作和方法"></span>
+## 适用于所有序列的操作和方法
+
+<span id="运算符"></span>
+### 运算符
 -	s[i]: 索引运算符；
 -	s[i:j]: 为切片运算符；
 -	s[i:j:stride] 为扩展切片运算符；
 -	切片运算，切片后的结果会生成新对象；
 
-### 内置函数：对象的自有的方法；
+<span id="内置函数-对象的自有的方法"></span>
+### 内置函数-对象的自有的方法
 -	min(s)和max(x)，只适用于能够对元素排序的序列；按ASCII码排序；
 -	sum(s)只适用于数字序列；求各项之和；
 -	all(s) 检查序列中的各项是否都为True；只要有一项为False就为False；
 -	len(s) 序列s中的元素个数；
 -	any(s) 检查序列s中的任意项是否为true；只要又一项为True就为True；
 
-## 适用于字符串的操作：
+[返回目录](#目录)
+
+<span id="适用于字符串的操作"></span>
+## 适用于字符串的操作
+
 Python2 提供两种字符串对象类型：
 - 字节字符串：字节(8bit数据)序列；
 - Unicode字符串：Unicode字符(16bit数据)序列；
@@ -240,10 +289,12 @@ Out[21]: 'www.sslinux.com'
 - s.split([sep [,maxaplit]])  	 使用sep作为分隔符对一个字符串进行划分。maxsplit是划分的最大次数；
 - s.strip([chrs])			删掉chrs开头和结尾的空白或指定字符；
 
+[返回目录](#目录)
 
 ---
+<span id="适用于可变序列的操作"></span>
+## 适用于可变序列的操作
 
-## 适用于可变序列的操作：
 - s[i] = v   			元素赋值；
 - s[i:j] = t 			切片赋值；
 - s[i:j:stride] = t            扩展切pain赋值；
@@ -251,9 +302,13 @@ Out[21]: 'www.sslinux.com'
 - del s[i:j]			切片删除；
 - del s[i:j:stride]	        扩展切片删除；
 
+[返回目录](#目录)
+
 ---
 
-## 适用于列表的方法：
+<span id="适用于列表的方法"></span>
+## 适用于列表的方法
+
 容器类型：
 
 	任意对象的有序集合，通过索引访问其中的元素，可变对象；
@@ -309,9 +364,12 @@ In [6]: print(l2)
 
 	相当于将l1的所有元素复制了一份给l3,深复制(copy.deepcopy)；
 
+[返回目录](#目录)
+
 ---
 
-### python内置库copy：
+<span id="python内置库copy"></span>
+## python内置库copy
 import copy
 
 - 列表复制方式：
@@ -324,10 +382,11 @@ import copy
 
 	l2 = l1[:]
 ```
-
+[返回目录](#目录)
 ---
 
-## 元组：
+<span id="元组"></span>
+## 元组
 表达式符号；()
 
 容器类型：
@@ -356,7 +415,10 @@ ValueError                                Traceback (most recent call last)
 ValueError: tuple.index(x): x not in tuple
 ```	
 
-### 元组常见操作：
+[返回目录](#目录)
+
+<span id="元组常见操作"></span>
+### 元组常见操作
 - () : 	定义空元组； 相当于 t1 = ()  <==> t1 = tuple()  
 - 切片，返回的是新元组；
 - 定义元组时，小括号()可省略，t1 = 1,2,3,4，建议尽量不要省略，以免造成歧义；
@@ -393,9 +455,13 @@ Out[21]: 70619904
 
 ![Sequence](/Python/images/sequence.png)
 
+[返回目录](#目录)
+
 ---
 
-## 映射类型：
+<span id="映射类型"></span>
+## 映射类型
+
 映射类型表示一个任意对象的集合，而且可以通过另一个几乎是任意键值的集合进行索引；
 
 与序列不同，映射是无序的，它通过键进行索引；
@@ -408,8 +474,12 @@ Out[21]: 70619904
 
 	引用不存在的键会引发KeyError异常；
 
+[返回目录](#目录)
 
-### 字典：dict
+
+<span id="dict"></span>
+## dict
+
 字典在其他编程语言中又称作关联数组或散列表；
 
 dict特性：
@@ -423,25 +493,28 @@ dict特性：
 len(d1):返回字典元素个数；
 ```
 
-字典内置方法：
-```python
-d1.clear: #清除其中的所有元素；
-d2 = d1.copy(): #字典复制；深复制；
-dict.get() : #返回指定键的值；
-dict.haskey(): #判断字典是否有指定键；
-dict.items():  #将字典转换为元组列表的形式；
-dict.keys():   #返回键列表；
-dict.values(): #返回值列表；
-dict.pop(): #弹出指定键的元素，并返回该键的值；
-dict.popitem(): #随机弹出键值映射；
-dict.update(d1): #合并两个字典，若两个字典中键有重复，以d1为结果；
-dict.iteritem: #返回一个键值对迭代器对象；可以使用next()方法。py3中无；
-dict.iterkeys: #返回一个键迭代器对象；py3: dict.keys()
-dict.itervalue: #返回一个值的迭代器对象；
-dict.viewitems: #返回键值对所拆分的元组；
-dict.viewkeys:  #返回键列表；
-dict.viewvalues: #返回值列表；
-```
+[返回目录](#目录)
+
+<span id="字典内置方法"></span>
+### 字典内置方法
+
+#### d1.clear: #清除其中的所有元素；
+#### d2 = d1.copy(): #字典复制；深复制；
+#### dict.get() : #返回指定键的值；
+#### dict.haskey(): #判断字典是否有指定键；
+#### dict.items():  #将字典转换为元组列表的形式；
+#### dict.keys():   #返回键列表；
+#### dict.values(): #返回值列表；
+#### dict.pop(): #弹出指定键的元素，并返回该键的值；
+#### dict.popitem(): #随机弹出键值映射；
+#### dict.update(d1): #合并两个字典，若两个字典中键有重复，以d1为结果；
+#### dict.iteritem: #返回一个键值对迭代器对象；可以使用next()方法。py3中无；
+#### dict.iterkeys: #返回一个键迭代器对象；py3: dict.keys()
+#### dict.itervalue: #返回一个值的迭代器对象；
+#### dict.viewitems: #返回键值对所拆分的元组；
+#### dict.viewkeys:  #返回键列表；
+#### dict.viewvalues: #返回值列表；
+
 
 ![Dict_Method](/Python/images/dict_method.png)
 
@@ -477,32 +550,45 @@ Out[23]: {'x': '1', 'y': '2', 'z': '3'}
 		可调用对象，判断对象是否可调用：内置函数callable()
 ```
 
+[返回目录](#目录)
+
 ---
 
-### 回顾：
+<span id="简单回顾"></span>
+### 简单回顾
+
 字串： 
 ```python
+	str()
     单引号：''
     双引号：""
     三个单引号：''',''' 
     三个双引号：""" """
 ```
-元组: ()
+元组: (),tuple()
 
-列表: []
+列表: [],list()
 
-字典: {}
+字典: {},dict()
 
-数值：
+数值：int()
 
-### 如何获取使用帮助：
+[返回目录](#目录)
+
+
+<span id="如何获取使用帮助"></span>
+## 如何获取使用帮助
 	获取对象支持使用的属性和方法：dir()
 	某方法的具体使用帮助：help() : help(list.pop)
 	获取可调用对象的文档字串：print(obj.__doc__)
 
+[返回目录](#目录)
+
 ---
 
-### 集合：一组无序排列的可hash的值；
+<span id="集合是一组无序排列的可hash的值"></span>
+## 集合是一组无序排列的可hash的值
+
 - 支持集合关系测试：
 
 	并集，交集，差集
@@ -527,39 +613,44 @@ s1 = set()
 s1 = set(一个可迭代对象)
 ```
 
-### 集合类型的方法和操作：
-```python
-len(s)		返回s中项目数；
-s.copy() 	制作s的一份副本；
-s.difference(t)	求差集，返回所有在s中，但不再t中的项目；
-s.intersection(t)	求交集。返回所有同时在s和t中的项目；
-s.isdisjoint(t)		如果s和t没有相同项，则返回True；
-s.issubset(t)		如果s是t的一个子集，则返回True；
-s.issuperset(t)		如果s是t的一个超集，则返回True；
-s.symmetric_difference(t)	
-# 求对称差集。返回所有在s或t中，但又不同时在这两个集合中的项求并集。返回所有在s或t中的项；
-s.union(t) 			求并集。返回所有在s或t中的项；
-s.pop()				弹出元素；
-s.update(s3) 		将可hash对象合并为一个集合；
-s.add() 			往集合中加入一个元素；
-```
+[返回目录](#目录)
 
-### 集合操作：
-```python
-s | t 		# s和t的并集
-s & t 		# s和t的交集
-s - t  		# 求差集；
-s ^ t 		# 求对称差集；
-len(s) 		# 集合中项数
-max(s) 		# 最大值
-min(s)		# 最小值；
-```
+<span id="集合类型的方法和操作"></span>
+### 集合类型的方法和操作
 
-- frozenset(): 冻结集合，不可变集合；与set()类似，但修改操作无效；
+#### len(s)		返回s中项目数；
+#### s.copy() 	制作s的一份副本；
+#### s.difference(t)	求差集，返回所有在s中，但不再t中的项目；
+#### s.intersection(t)	求交集。返回所有同时在s和t中的项目；
+#### s.isdisjoint(t)		如果s和t没有相同项，则返回True；
+#### s.issubset(t)		如果s是t的一个子集，则返回True；
+#### s.issuperset(t)		如果s是t的一个超集，则返回True；
+#### s.symmetric_difference(t)	求对称差集。返回所有在s或t中，但又不同时在这两个集合中的项求并集。返回所有在s或t中的项；
+#### s.union(t) 			求并集。返回所有在s或t中的项；
+#### s.pop()				弹出元素；
+#### s.update(s3) 		将可hash对象合并为一个集合；
+#### s.add() 			往集合中加入一个元素；
+
+[返回目录](#目录)
+
+<span id="集合操作"></span>
+### 集合操作
+#### s | t 		# s和t的并集
+#### s & t 		# s和t的交集
+#### s - t  		# 求差集；
+#### s ^ t 		# 求对称差集；
+#### len(s) 		# 集合中项数
+#### max(s) 		# 最大值
+#### min(s)		# 最小值；
+#### frozenset(): 冻结集合，不可变集合；与set()类似，但修改操作无效；
+
+[返回目录](#目录)
 
 ---
 
-### 容器、类型、对象：
+<span id="容器类型对象"></span>
+## 容器类型对象
+
 1、列表、元组、字典字面量可在不使用续行符的情况下跨行定义，最后一个元素后面可以使用逗号，为空的情况下不可以使用逗号；
 
 2、所有对象都有引用计数，为某个对象指定新名称或将某个对象放入容器中，都会增加该对象的引用计数；当引用计数为0时，垃圾回收器就可以在后台将对象回收；
@@ -579,27 +670,25 @@ sys.getrefcount(name)
 5、所有序列都支持迭代；
 
 6、所有序列都支持的操作和方法：
-```python
-	s[i]
-	s[i:j]
-	s[i:j:stride]
-	len(s)
-	min(s)
-	max(s)
-	sum(s)
-	all(s)
-	any(s)
-	s1 + s2: 连接
-	s1 * N: 重复
-	obj in s1 : 成员关系判断
-	obj not in s1: 
-```
+* s[i]
+* s[i:j]
+* s[i:j:stride]
+* len(s)
+* min(s)
+* max(s)
+* sum(s)
+* all(s)
+* any(s)
+* s1 + s2: 连接
+* s1 * N: 重复
+* obj in s1 : 成员关系判断；
+* obj not in s1: 成员关系判断；
 
 7、可变序列的操作：
-```python
-	s1[index] = value  元素赋值；
-	s1[i:j]  = t  切片赋值；
-	del s1[index]  删除指定元素；
-	del s1[i:j]    删除切片；
-	del s1[i:j:stride]   删除扩展切片；
-```	
+* s1[index] = value  元素赋值；
+* s1[i:j]  = t  切片赋值；
+* del s1[index]  删除指定元素；
+* del s1[i:j]    删除切片；
+* del s1[i:j:stride]   删除扩展切片；
+
+[返回目录](#目录)
