@@ -6,6 +6,8 @@
   - [01.QuickStart](Python/01QuickStart.md)
   - [02.Built-in Types](Python/02BuiltinTypes.md)
 * [二、Golang](Golang/Golang.md)
+  - [00.Installation](Golang/00Installation.md)
+  - [01.GOPATH and WORKSPACE](Golang/01GOPATH与工作空间.md)
 * [三、JavaScript](JavaScript/JavaScript.md)
 * [四、NodeJS](NodeJS/NodeJS.md)
 * [五、DevOps](DevOps/DevOps.md)
