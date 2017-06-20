@@ -1,9 +1,8 @@
 # Interview 
 
-<!-- toc -->
-
 ## [Nginx](Nginx.md)
 ## [Tegine](Tegine.md)
+## [lua](lua.md)
 ## [Openresty](Openresty.md)
 ## [awk](awk.md)
 ## [Shell](Shell.md)
