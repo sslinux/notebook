@@ -37,7 +37,7 @@
 
 ## ansible命令的使用
 
-### Usage: ansible <host-pattern> [options]
+### Usage: ansible host-pattern [options]
 
 #### 常用选项：
 * -m MOD_NAME  默认的MOD_NAME 是command；
@@ -159,6 +159,7 @@ Last login: Wed Jun 21 14:40:32 2017 from 172.27.8.23
 ### 获取指定模块的使用帮助
 
 #### ansible-doc -s MOD_NAME
+
 ```bash
 [root@falcon ansible]# ansible-doc -s user
 ```
@@ -270,8 +271,9 @@ This is a test conten for copy module
 #### user模块：用户管理
 #### setup模块：收集主机里面的各种信息
 
+---
 
-# YAML
+## YAML
 
 YAML是一种数据序列化工具的语言格式；
 
@@ -317,7 +319,7 @@ key:value
 例如： {name:jason,age:21}
 
 
-# playbook
+## playbook
 
 ## 核心元素
 * Tasks:任务，由模块定义的操作的列表；
@@ -332,7 +334,7 @@ key:value
 * sudo_user: 非管理员需要拥有sudo权限；
 * tasks: 任务列表；
 
-#### 格式：
+## 格式
 * (1) action: module arguments
 * (2) module: arguments
 
