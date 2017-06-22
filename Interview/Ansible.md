@@ -246,7 +246,7 @@ This is a test conten for copy module
   - hour=
   - day=
   - month=
-  -weekday=
+  - weekday=
 
 * job='要执行的命令'
 * name='给这个任务取个名字，后期删除的时候可以用'
@@ -270,5 +270,397 @@ This is a test conten for copy module
 #### user模块：用户管理
 #### setup模块：收集主机里面的各种信息
 
+
+# YAML
+
+YAML是一种数据序列化工具的语言格式；
+
+```bash
+[root@falcon ~]# yum info PyYAML
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.uhost.hk
+ * extras: centos.uhost.hk
+ * updates: mirror.vpshosting.com.hk
+Installed Packages
+Name        : PyYAML
+Arch        : x86_64
+Version     : 3.10
+Release     : 11.el7
+Size        : 630 k
+Repo        : installed
+From repo   : base
+Summary     : YAML parser and emitter for Python
+URL         : http://pyyaml.org/
+License     : MIT
+Description : YAML is a data serialization format designed for human readability and
+            : interaction with scripting languages.  PyYAML is a YAML parser and
+            : emitter for Python.
+            : 
+            : PyYAML features a complete YAML 1.1 parser, Unicode support, pickle
+            : support, capable extension API, and sensible error messages.  PyYAML
+            : supports standard YAML tags and provides Python-specific tags that
+            : allow to represent an arbitrary Python object.
+            : 
+            : PyYAML is applicable for a broad range of tasks from complex
+            : configuration files to object serialization and persistance.
+```
+
+## 数据结构
+
+key:value 
+
+- -item1
+- -item2
+- -item3
+
+例如： {name:jason,age:21}
+
+
+# playbook
+
+## 核心元素
+* Tasks:任务，由模块定义的操作的列表；
+* Variables:变量；
+* Templates:模板，即使用了模板语法的文本文件；
+* Handlers: 有特定条件触发的Tasks；
+* Roles:角色；
+
+## playbook的基础组件
+* Hosts:运行指定任务的目标主机；
+* remote_user: 在远程主机上以那个身份执行；
+* sudo_user: 非管理员需要拥有sudo权限；
+* tasks: 任务列表；
+
+#### 格式：
+* (1) action: module arguments
+* (2) module: arguments
+
+运行playbook，使用ansible-playbook命令；
+
+* (1) 检测语法
+
+ansible-playbook --syntax-check /path/to/playbook.yaml
+
+* (2) 测试运行
+
+ansible-playbook -C /path/to/playbook.yaml
+
+--list-hosts
+
+--list-tasks
+
+--list-tags
+
+(3) 运行
+
+ansible-playbook /path/to/playbook.yaml
+
+-t TAGS, --tags=TAGS
+
+--skip-tags=SKIP_TAGS
+
+--start-at-task=START_AT
+
+
+----
+
+Example 1: 定义一个playbook任务来新增用户和组，定义一个yaml的模板；
+
+```bash
+[root@falcon ansible]# vim group.yaml
+[root@falcon ansible]# cat group.yaml 
+```
+```yaml
+- hosts: falcon
+  remote_user: root
+  tasks:
+  - name: add a group
+    group: name=pbgroup system=true
+  - name: add a user
+    user: name=pbuser group=pbgroup system=true
+```
+
+查查语法有没有错误，没有提示即表示语法应该没有问题。
+```bash
+[root@falcon ansible]# ansible-playbook --syntax-check group.yaml 
+
+playbook: group.yaml
+```
+
+测试运行看看，-C表示仅测试跑一边，但是不会实际操作:
+```bash
+[root@falcon ansible]# ansible-playbook -C group.yaml 
+
+PLAY [falcon] *****************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [add a group] ************************************************************************************************************************************************************************************************
+changed: [172.27.2.79]
+changed: [172.27.2.88]
+
+TASK [add a user] *************************************************************************************************************************************************************************************************
+changed: [172.27.2.79]
+changed: [172.27.2.88]
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+172.27.2.79                : ok=3    changed=2    unreachable=0    failed=0   
+172.27.2.88                : ok=3    changed=2    unreachable=0    failed=0   
+```
+
+也可以单独测试某些特定的选项：
+
+* 仅查看影响的主机：
+
+```bash
+[root@falcon ansible]# ansible-playbook -C group.yaml --list-hosts
+
+playbook: group.yaml
+
+  play #1 (falcon): falcon	TAGS: []
+    pattern: [u'falcon']
+    hosts (2):
+      172.27.2.79
+      172.27.2.88
+```
+
+* 查看运行哪些任务：
+
+```bash 
+[root@falcon ansible]# ansible-playbook -C group.yaml --list-tasks
+
+playbook: group.yaml
+
+  play #1 (falcon): falcon	TAGS: []
+    tasks:
+      add a group	TAGS: []
+      add a user	TAGS: []
+```
+
+* 查看哪个任务打标了，这里并没有任何任务打标记：
+
+```bash 
+[root@falcon ansible]# ansible-playbook -C group.yaml --list-tags
+
+playbook: group.yaml
+
+  play #1 (falcon): falcon	TAGS: []
+      TASK TAGS: []
+```
+
+
+* 正式运行该任务：
+
+```bash
+[root@falcon ansible]# ansible-playbook group.yaml 
+
+PLAY [falcon] *****************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [add a group] ************************************************************************************************************************************************************************************************
+changed: [172.27.2.79]
+changed: [172.27.2.88]
+
+TASK [add a user] *************************************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+172.27.2.79                : ok=3    changed=2    unreachable=0    failed=0   
+172.27.2.88                : ok=3    changed=2    unreachable=0    failed=0   
+```
+
+* 验证执行效果：
+
+```bash
+[root@falcon ansible]# ansible falcon -a "tail -1 /etc/passwd"
+172.27.2.79 | SUCCESS | rc=0 >>
+pbuser:x:995:993::/home/pbuser:/bin/bash
+
+172.27.2.88 | SUCCESS | rc=0 >>
+pbuser:x:987:984::/home/pbuser:/bin/bash
+
+[root@falcon ansible]# ansible falcon -a "getent group pbgroup"
+172.27.2.88 | SUCCESS | rc=0 >>
+pbgroup:x:984:
+
+172.27.2.79 | SUCCESS | rc=0 >>
+pbgroup:x:993:
+```
+
+----
+
+Example 2: 定义一个playbook任务来修改配置文件中的监听端口；
+
+```bash 
+[root@falcon ansible]# cat httpd.yaml
+- hosts: falcon 
+  remote_user: root
+  tasks:
+  - name: install httpd package
+    yum: name=httpd state=latest
+  - name: backup apache conf file
+    shell: cp /etc/httpd/conf/httpd.conf{,.bak}
+  - name: install conf file
+    copy: src=/root/ansible/httpd.conf dest=/etc/httpd/conf/httpd.conf
+  - name: start httpd service
+    service: name=httpd state=started enabled=yes
+[root@falcon ansible]# ansible-playbook --syntax-check httpd.yaml 
+
+playbook: httpd.yaml
+```
+
+* 执行playbook
+
+```bash 
+[root@falcon ansible]# ansible-playbook httpd.yaml 
+
+PLAY [falcon] *****************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [install httpd package] **************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [backup apache conf file] ************************************************************************************************************************************************************************************
+changed: [172.27.2.79]
+changed: [172.27.2.88]
+
+TASK [install conf file] ******************************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+TASK [start httpd service] ****************************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+172.27.2.79                : ok=5    changed=3    unreachable=0    failed=0   
+172.27.2.88                : ok=5    changed=3    unreachable=0    failed=0   
+```
+
+
+* 验证：
+
+配置文件是否备份成功：
+```bash 
+[root@falcon ansible]# ansible falcon -m shell -a "ls -lh /etc/httpd/conf/"
+172.27.2.79 | SUCCESS | rc=0 >>
+total 40K
+-rw-r--r--. 1 root root 12K 6月  22 11:28 httpd.conf
+-rw-r--r--. 1 root root 12K 6月  22 11:28 httpd.conf.bak
+-rw-r--r--. 1 root root 13K 4月  13 05:04 magic
+
+172.27.2.88 | SUCCESS | rc=0 >>
+total 40K
+-rw-r--r--. 1 root root 12K 6月  22 11:28 httpd.conf
+-rw-r--r--. 1 root root 12K 6月  22 11:28 httpd.conf.bak
+-rw-r--r--. 1 root root 13K 4月  13 05:04 magic
+```
+
+修改后的监听端口：
+
+```bash 
+[root@falcon ansible]# ansible falcon -m shell -a "ss -tnl | grep 8008"
+172.27.2.79 | SUCCESS | rc=0 >>
+LISTEN     0      128         :::8008                    :::*                  
+
+172.27.2.88 | SUCCESS | rc=0 >>
+LISTEN     0      128                      :::8008                    :::*  
+```
+
+## Handlers的使用：由特定条件触发的Tasks；
+
+格式：
+
+tasks:
+  - name: TASK_NAME
+    module: arguments
+    notify: HANDLER_NAME
+    handlers:
+  - name: HANDLER_NAME
+    module: arguments
+
+Example: 在上面httpd.yaml的基础上修改；
+
+在Ansible端修改配置文件中的监听端口为8009。
+
+修改httpd.yaml如下：
+
+```bash
+[root@falcon ansible]# cat httpd.yaml 
+- hosts: falcon 
+  remote_user: root
+  tasks:
+  - name: install httpd package
+    yum: name=httpd state=latest
+  - name: backup apache conf file
+    shell: cp /etc/httpd/conf/httpd.conf{,.bak}
+  - name: install conf file
+    copy: src=/root/ansible/httpd.conf dest=/etc/httpd/conf/httpd.conf
+    notify: restart httpd service
+  - name: start httpd service
+    service: name=httpd state=started enabled=yes
+  handlers:
+  - name: restart httpd service
+    service: name=httpd state=restarted
+```
+
+```bash
+[root@falcon ansible]# ansible-playbook --syntax-check httpd.yaml 
+
+playbook: httpd.yaml
+[root@falcon ansible]# ansible-playbook httpd.yaml 
+
+PLAY [falcon] *****************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [install httpd package] **************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [backup apache conf file] ************************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+TASK [install conf file] ******************************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+TASK [start httpd service] ****************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+RUNNING HANDLER [restart httpd service] ***************************************************************************************************************************************************************************
+changed: [172.27.2.79]
+changed: [172.27.2.88]
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+172.27.2.79                : ok=6    changed=3    unreachable=0    failed=0   
+172.27.2.88                : ok=6    changed=3    unreachable=0    failed=0   
+```
+
+* 验证结果：
+```bash
+[root@falcon ansible]# ansible falcon -m shell -a "ss -tnlp | grep 8009"
+172.27.2.79 | SUCCESS | rc=0 >>
+LISTEN     0      128         :::8009                    :::*                   users:(("httpd",pid=23844,fd=4),("httpd",pid=23843,fd=4),("httpd",pid=23842,fd=4),("httpd",pid=23841,fd=4),("httpd",pid=23840,fd=4),("httpd",pid=23838,fd=4))
+
+172.27.2.88 | SUCCESS | rc=0 >>
+LISTEN     0      128                      :::8009                    :::*      users:(("httpd",17037,4),("httpd",17036,4),("httpd",17035,4),("httpd",17034,4),("httpd",17033,4),("httpd",17032,4),("httpd",17031,4))
+
+```
 
 
