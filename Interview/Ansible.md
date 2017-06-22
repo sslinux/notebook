@@ -578,17 +578,48 @@ LISTEN     0      128         :::8008                    :::*
 LISTEN     0      128                      :::8008                    :::*  
 ```
 
-## Handlers的使用：由特定条件触发的Tasks；
+## Handlers
+
+由特定条件触发的Tasks；
+
+handlers用于当关注的资源发生变化时采取一定的操作。
+
+“notify”这个action可用于在每个play的最后被触发，这样可以避免多次有改变发生时都执行指定的操作，取而代之在所有的变化发生完成后一次性地执行指定操作。
+
+在notify中列出的操作称为handler也即notify中调用handler中定义的操作。
+
+**注意：** 在notify中定义内容一定要和tasks中定义的 - name内容一样，这样才能达到触发的效果，否则不会生效。
+
+```yaml
+- name: template configuration file
+  template: src=template.j2 dest=/etc/foo.conf
+  notify:
+  - restart memcached
+  - restart apache
+
+#handler是task列表这些task与前述的task并没有本质上的不同。
+handlers:
+  - name: restart memcached
+    service: name=memcached state=restarted
+  - name: restart apache
+    service: name=apache state=restarted 
+```
 
 格式：
 
+```yaml
 tasks:
   - name: TASK_NAME
     module: arguments
-    notify: HANDLER_NAME
+    notify: 
+    - HANDLER_NAME1
+    - HANDLER_NAME2
     handlers:
-  - name: HANDLER_NAME
+  - name: HANDLER_NAME1
     module: arguments
+  - name: HANDLER_NAME2
+    module: arguments
+```
 
 Example: 在上面httpd.yaml的基础上修改；
 
@@ -660,7 +691,151 @@ LISTEN     0      128         :::8009                    :::*                   
 
 172.27.2.88 | SUCCESS | rc=0 >>
 LISTEN     0      128                      :::8009                    :::*      users:(("httpd",17037,4),("httpd",17036,4),("httpd",17035,4),("httpd",17034,4),("httpd",17033,4),("httpd",17032,4),("httpd",17031,4))
-
 ```
 
+
+---
+在众多模块中只有command和shell模块仅需要给定一个列表而无需使用“key=value”格式；
+
+例如：
+
+```yaml
+tasks:
+  - name: disable selinux
+    command: /sbin/setenforce 0
+```
+如果命令或脚本的退出码不为0可以使用如下方式替代：
+
+```yaml
+tasks:
+  - name: run this command and ignore the result.
+    shell: /usr/bin/somecommand || /bin/true
+```
+
+也可以使用ignore_errors来忽略错误信息；
+
+```yaml
+- name: run this command and ignore the result
+  shell: /usr/bin/somecommand
+  ignore_errors: True
+```
+---
+
+
+## tags
+
+给指定的任务定义一个调用标识；
+
+tags用于让用户选择运行或略过playbook中的部分代码。Ansible具有幂等性，因此会自动跳过没有变化的部分。
+
+即便如此，有些代码为测试其确实没有发生变化的时间会非常的长；
+
+此时如果确信其没有变化就可以通过tags跳过这些代码片段；
+
+
+定义tags的格式：
+
+```yaml
+- name: NAME
+  module: arguments
+  tags: TAG_ID
+```
+
+Example：修改ansible端配置文件中的监听端口后，使用ansible-playbook -t TAG_ID[,...] 执行指定的tasks；
+
+```bash
+[root@falcon ansible]# cat httpd.yaml
+- hosts: falcon 
+  remote_user: root
+  tasks:
+  - name: install httpd package
+    yum: name=httpd state=latest
+  - name: backup apache conf file
+    shell: cp /etc/httpd/conf/httpd.conf{,.bak}
+  - name: install conf file
+    copy: src=/root/ansible/httpd.conf dest=/etc/httpd/conf/httpd.conf
+    tags: instconf
+    notify: restart httpd service
+  - name: start httpd service
+    service: name=httpd state=started enabled=yes
+  handlers:
+  - name: restart httpd service
+    service: name=httpd state=restarted
+[root@falcon ansible]# ansible-playbook --syntax-check httpd.yaml 
+
+playbook: httpd.yaml
+```
+
+此处可以查看到该yaml脚本有一个标签，影响着falcon组：
+
+```bash 
+[root@falcon ansible]# ansible-playbook --list-tags httpd.yaml 
+
+playbook: httpd.yaml
+
+  play #1 (falcon): falcon	TAGS: []
+      TASK TAGS: [instconf]
+```
+
+* 测试运行
+```bash 
+[root@falcon ansible]# ansible-playbook -C -t instconf httpd.yaml 
+
+PLAY [falcon] *****************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [install conf file] ******************************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+RUNNING HANDLER [restart httpd service] ***************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+172.27.2.79                : ok=3    changed=2    unreachable=0    failed=0   
+172.27.2.88                : ok=3    changed=2    unreachable=0    failed=0   
+```
+
+正式运行一下，指定以instconf的标签运行，所以此处不会显示其他多余的信息，包括安装httpd包和启动httpd服务;
+
+```bash 
+[root@falcon ansible]# ansible-playbook -t instconf httpd.yaml 
+
+PLAY [falcon] *****************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************************************************************************
+ok: [172.27.2.79]
+ok: [172.27.2.88]
+
+TASK [install conf file] ******************************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+RUNNING HANDLER [restart httpd service] ***************************************************************************************************************************************************************************
+changed: [172.27.2.88]
+changed: [172.27.2.79]
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+172.27.2.79                : ok=3    changed=2    unreachable=0    failed=0   
+172.27.2.88                : ok=3    changed=2    unreachable=0    failed=0   
+```
+
+验证该结果：
+
+```bash 
+[root@falcon ansible]# cat httpd.conf | grep ^Listen
+Listen 8099
+[root@falcon ansible]# ansible falcon -m shell -a "ss -tnl | grep 8099"
+172.27.2.79 | SUCCESS | rc=0 >>
+LISTEN     0      128         :::8099                    :::*                  
+
+172.27.2.88 | SUCCESS | rc=0 >>
+LISTEN     0      128                      :::8099                    :::*    
+```
+
+也可以对同一个文件标记多个标签同时执行,只需要执行ansible-playbook -t TAG_ID1,TAG_ID2[,....] *.yaml
 
