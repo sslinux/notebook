@@ -334,11 +334,11 @@ key:value
 * sudo_user: 非管理员需要拥有sudo权限；
 * tasks: 任务列表；
 
-## 格式
+## playbook格式
 * (1) action: module arguments
 * (2) module: arguments
 
-运行playbook，使用ansible-playbook命令；
+## ansible-playbook命令
 
 * (1) 检测语法
 
