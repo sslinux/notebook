@@ -123,10 +123,18 @@ $ pip install --egg pyenv
 ### 安装依赖包
 
 ```bash
+# Fedora/RHEL/CentOS
 [sslinux@localhost ~]$ sudo yum -y install gdbm-devel openssl-devel \
 sqlite-devel readline-devel zlib-devel bzip2-devel
 ```
 
+```bash
+# Ubuntu/Kali/Debian
+sudo apt-get update
+sudo apt-get install make build-essential libssl-dev zlib1g-dev
+sudo apt-get install libbz2-dev libreadline-dev libsqlite3-dev wget curl
+sudo apt-get install llvm libncurses5-dev libncursesw5-dev
+```
 [返回目录](#目录)
 
 <span id="安装python3.5.2"></span>
